@@ -188,9 +188,6 @@ class ATM:
     def logout(self):
         self.database.logout()
 
-def cat():
-    print("hi")
-    return 2
 
 def main():
     
@@ -200,13 +197,13 @@ def main():
     while True:
         #The purpose of this code is to logout after 2 minutes
         #If no activity has been done.
-        #I have commented this functionality out because it gives
-        #odd behaviors on some IDE but I have seen this working on replit.com
+        #I have commented this functionality out because it hasn't been
+        #fully tested
         #user_authorized = AtmObj.access_authorization_level()
         #if user_authorized: - We can only logout if theres an active acc
             #timeout = 120
-            #t = Timer(timeout, AtmObj.logout)
-            #t.start()
+            #t = Timer(timeout, AtmObj.logout) -
+            #t.start() -Waits 2 minutes for a response before logging out
         ########################################################
         
         choice = list(input("Input: ").split())
@@ -217,13 +214,15 @@ def main():
         elif choice[0] == "withdraw" or  choice[0] =="deposit":
             
             user_authorized = AtmObj.access_authorization_level()
-            if user_authorized != None:
-                transaction_action = choice[0]
-                amount = float(choice[1])
-                AtmObj.select_transaction(transaction_action, amount)
-
-            else:
-                print("Authorization required.")
+            try:
+                if user_authorized != None:
+                    transaction_action = choice[0]
+                    amount = float(choice[1])
+                    AtmObj.select_transaction(transaction_action, amount)
+                else:
+                    print("Authorization required.")
+            except:
+                print("Bad input. Please try again")
         
         elif choice[0] == "balance":
             user_authorized = AtmObj.access_authorization_level()
